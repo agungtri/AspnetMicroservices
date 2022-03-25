@@ -74,7 +74,7 @@ namespace Basket.API.Controllers
             // remove the basket
 
             // get existing basket with total price
-            var basket = await _repository.GetBasket(basketCheckout.UserName);
+            var basket = await _repository.GetBasket(basketCheckout.UserName); 
             if (basket == null)
             {
                 return BadRequest();
