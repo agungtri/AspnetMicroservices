@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,25 @@ namespace Catalog.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" });
             });
-
+            
+            //authentication API
+            services.AddAuthentication("Bearer")
+                   .AddJwtBearer("Bearer", options =>
+                   {
+                       options.Authority = "https://localhost:7005";
+                       options.TokenValidationParameters = new TokenValidationParameters
+                       {
+                           ValidateAudience = false
+                       };
+                   });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "catalogClient", "catalog_mvc_client"));
+            });
+            
             services.AddScoped<ICatalogContext, CatalogContext>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +67,7 @@ namespace Catalog.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

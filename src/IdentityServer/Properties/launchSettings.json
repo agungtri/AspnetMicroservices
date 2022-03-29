@@ -17,12 +17,11 @@
     },
     "IdentityServer": {
       "commandName": "Project",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:7001"
+      "applicationUrl": "https://localhost:7005"
     }
   }
 }

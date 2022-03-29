@@ -152,7 +152,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ApiSettings:GatewayAddress=http://ocelotapigw"
     depends_on:
-      - ocelot.api
+      - ocelotapigw
       - catalog.api
       - basket.api
       - discount.api
