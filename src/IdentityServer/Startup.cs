@@ -34,6 +34,7 @@ namespace IdentityServer
 
             app.UseRouting();
             app.UseIdentityServer();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
